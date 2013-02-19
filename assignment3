@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+#include<stdlib.h>
+int i;
+int * derivative(int * arr, int n)
+{ 
+    int *deriv = (int*)malloc(n+1);
+    for(int i=n;i>0;i--)
+    {
+            deriv[i-1]=arr[i]*i;
+            printf("\n%d",deriv[i-1]);
+    }
+    return deriv;
+}
+void display_equation(int a[],int m)
+{
+     printf("The equation format is: ");
+     for(i=m;i>=0;i--)
+     {
+         printf("%d",a[i]);
+         if(i==0){
+         break;}
+         printf("x^%d + ",i);
+     }
+}
+int main(void)
+{
+    int n;
+    printf("Enter the highest degree of the equation:\n");
+    scanf("%d",&n);
+    int arr[n+1];    
+    printf("Enter the coefficient of the equation from highest order:\n");
+    for(i=n;i>=0;i--)
+    {
+           printf("?:");
+           scanf("%d",&arr[i]);
+    }
+    display_equation(arr,n);
+    int* deri = derivative(arr,n);
+    printf("\nThe equation after derivative is:\n");
+    display_equation(deri,n-1);
+    getch();
+    return 0;
+}
