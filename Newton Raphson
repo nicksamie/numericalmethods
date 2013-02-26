@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+#include<stdlib.h>
+#define E 0.05
+int i,count=0;
+float root;
+
+int * derivative(int * arr, int n)
+{    
+    int *deriv = (int*)malloc(n+1);
+    for(int i=n;i>0;i--)
+    {
+            deriv[i-1]=arr[i]*i;
+    }
+    return deriv;
+}
+
+float newtFunction_value(int arr[],int m,float x)
+{
+        float fx_val=0;
+        for(i=m;i>=0;i--)
+        {
+              fx_val+=arr[i]*pow(x,i);
+        }
+       return (fx_val);        
+}
+int main(void)
+{
+    int n;
+    float x0,x1,fx1,fderix,error;
+    printf("Enter the highest degree of the equation:\n");
+    scanf("%d",&n);
+    int arr[n+1];
+    
+    printf("Enter the coefficient of the equation:\n");
+    for(i=n;i>=0;i--)
+    {
+           printf("?:");
+           scanf("%d",&arr[i]);
+    }
+    printf("Enter the initial guess x0 :");
+    scanf("%f",&x0);
+    
+    while(1)
+    {
+            printf("\n\n\tIteration %d",++count);
+            printf("\n-------------------------");
+            fx1 = newtFunction_value(arr,n,x0);
+            printf("\nfx1 value: %f",fx1);
+    
+            int* deri = derivative(arr,n);
+            fderix = newtFunction_value(deri,n-1,x0);
+            printf("\nf'x value: %f",fderix);
+    
+            x1=x0-(float)(fx1/fderix);
+            printf("\nnew x1 is:%f",x1);
+    
+            error=abs((x1-x0)/x1);
+            printf("\nerror is %f",error);
+            if(error<E)
+            {
+                       root=x0;
+                       break;
+            }
+            else
+            {
+                       x0=x1;
+            }
+             
+    }//end of while
+    printf("\n\nfinal root is %f",root);
+    
+    getch();
+    return 0;
+}
